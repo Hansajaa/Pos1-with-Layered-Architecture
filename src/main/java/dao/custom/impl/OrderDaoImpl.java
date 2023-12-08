@@ -1,9 +1,9 @@
-package dao.Impl;
+package dao.custom.impl;
 
 import DB.DBConnection;
 import Dto.OrderDto;
-import dao.OrderDetailDao;
-import dao.OrderDao;
+import dao.custom.OrderDao;
+import dao.custom.OrderDetailDao;
 
 import java.sql.*;
 

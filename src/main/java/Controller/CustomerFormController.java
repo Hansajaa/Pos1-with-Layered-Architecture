@@ -2,8 +2,10 @@ package Controller;
 
 import Dto.CustomerDto;
 import Dto.Tm.CustomerTm;
-import dao.CustomerDao;
-import dao.Impl.CustomerDaoImpl;
+import bo.custom.CustomerBo;
+import bo.custom.impl.CustomerBoImpl;
+import dao.custom.CustomerDao;
+import dao.custom.impl.CustomerDaoImpl;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
@@ -39,7 +41,7 @@ public class CustomerFormController {
     public TableColumn colOption;
     public JFXTextField txtSerach;
 
-    CustomerDao customerDao =new CustomerDaoImpl();
+    CustomerBo<CustomerDto,String> customerBo =new CustomerBoImpl();
     public void initialize(){
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -53,7 +55,7 @@ public class CustomerFormController {
     private void loadCustomerTable() {
         ObservableList<CustomerTm> ctm = FXCollections.observableArrayList();
         try {
-            List<CustomerDto> dtoList = customerDao.allCustomers();
+            List<CustomerDto> dtoList = customerBo.allCustomers();
             for(CustomerDto dto:dtoList){
                 Button btn =new Button("Delete");
                 CustomerTm c = new CustomerTm(
@@ -77,7 +79,7 @@ public class CustomerFormController {
 
     private void deleteCustomer(String id) {
         try {
-            boolean isDelete = customerDao.deleteCustomer(id);
+            boolean isDelete = customerBo.deleteCustomer(id);
             if (isDelete){
                 new Alert(Alert.AlertType.INFORMATION,"Delete Successfully").show();
             }else{
@@ -95,7 +97,7 @@ public class CustomerFormController {
             CustomerDto c = new CustomerDto(txtId.getText(), txtName.getText(), txtAddress.getText(), Double.parseDouble(txtSalary.getText()));
 
             try {
-                boolean isSaved = customerDao.saveCustomer(c);
+                boolean isSaved = customerBo.saveCustomer(c);
 
                 if (isSaved){
                     loadCustomerTable();
