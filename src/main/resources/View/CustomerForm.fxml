@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="customerPane" prefHeight="587.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CustomerFormController">
+   <children>
+      <JFXButton fx:id="btnSave" layoutX="495.0" layoutY="156.0" onAction="#saveButtonOnAction" prefHeight="46.0" prefWidth="150.0" style="-fx-background-color: #2cb531; -fx-background-radius: 10;" text="Save" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton fx:id="btnUpdate" layoutX="318.0" layoutY="156.0" prefHeight="46.0" prefWidth="150.0" style="-fx-background-color: #ff5a08; -fx-background-radius: 10px;" text="Update" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXTextField fx:id="txtId" layoutX="40.0" layoutY="107.0" unFocusColor="BLACK" />
+      <JFXTextField fx:id="txtName" layoutX="201.0" layoutY="107.0" />
+      <JFXTextField fx:id="txtAddress" layoutX="363.0" layoutY="107.0" />
+      <JFXTextField fx:id="txtSalary" layoutX="517.0" layoutY="107.0" />
+      <Text layoutX="100.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID">
+         <font>
+            <Font name="Baskerville Old Face" size="13.0" />
+         </font>
+      </Text>
+      <Text layoutX="253.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
+         <font>
+            <Font name="Baskerville Old Face" size="13.0" />
+         </font>
+      </Text>
+      <Text layoutX="409.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Address">
+         <font>
+            <Font name="Baskerville Old Face" size="13.0" />
+         </font>
+      </Text>
+      <Text layoutX="563.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Salary">
+         <font>
+            <Font name="Baskerville Old Face" size="13.0" />
+         </font>
+      </Text>
+      <TableView fx:id="tblCustomer" layoutX="20.0" layoutY="225.0" prefHeight="331.0" prefWidth="661.0">
+        <columns>
+          <TableColumn minWidth="0.0" prefWidth="0.0" text="C2" />
+            <TableColumn fx:id="colId" prefWidth="78.0" text="ID" />
+            <TableColumn fx:id="colName" prefWidth="141.0" text="Name" />
+            <TableColumn fx:id="colAddress" prefWidth="145.0" text="Address" />
+            <TableColumn fx:id="colSalary" prefWidth="137.0" text="Salary" />
+            <TableColumn fx:id="colOption" prefWidth="137.0" text="Option" />
+        </columns>
+      </TableView>
+      <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="14.0" layoutY="14.0" onAction="#backButtonOnAction" prefHeight="38.0" prefWidth="42.0" text="Back">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="32.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/back_btn.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXTextField fx:id="txtSerach" layoutX="33.0" layoutY="167.0" promptText="Search" unFocusColor="BLACK" />
+   </children>
+</AnchorPane>
