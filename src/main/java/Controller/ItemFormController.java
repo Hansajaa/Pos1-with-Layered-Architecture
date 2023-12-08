@@ -2,8 +2,8 @@ package Controller;
 
 import Dto.ItemDto;
 import Dto.Tm.ItemTm;
-import dao.Impl.ItemModelImpl;
-import dao.ItemModel;
+import dao.Impl.ItemDaoImpl;
+import dao.ItemDao;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTreeTableView;
@@ -64,7 +64,7 @@ public class ItemFormController {
     @FXML
     private TreeTableColumn colOption;
 
-    ItemModel itemModel=new ItemModelImpl();
+    ItemDao itemDao =new ItemDaoImpl();
 
     public void initialize() {
         colCode.setCellValueFactory(new TreeItemPropertyValueFactory<>("code"));
@@ -93,7 +93,7 @@ public class ItemFormController {
 
         ObservableList<ItemTm> itm = FXCollections.observableArrayList();
         try {
-            List<ItemDto> dtoList = itemModel.allItems();
+            List<ItemDto> dtoList = itemDao.allItems();
             for (ItemDto dto:dtoList){
                 JFXButton btn =new JFXButton("Delete");
                 ItemTm i = new ItemTm(
@@ -119,7 +119,7 @@ public class ItemFormController {
 
     private void deleteItem(String code) {
         try {
-            boolean isDeleted = itemModel.deleteItem(code);
+            boolean isDeleted = itemDao.deleteItem(code);
             if (isDeleted){
                 new Alert(Alert.AlertType.INFORMATION,"Delete Successfully").show();
                 loadItemTable();
@@ -145,7 +145,7 @@ public class ItemFormController {
             );
 
             try {
-                boolean isSaved = itemModel.saveItem(item);
+                boolean isSaved = itemDao.saveItem(item);
                 if (isSaved){
                     new Alert(Alert.AlertType.INFORMATION,"Item Added Successfully").show();
                     txtCode.setText("");

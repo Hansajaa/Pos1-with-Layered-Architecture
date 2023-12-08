@@ -2,8 +2,8 @@ package Controller;
 
 import Dto.CustomerDto;
 import Dto.Tm.CustomerTm;
-import dao.CustomerModel;
-import dao.Impl.CustomerModelImpl;
+import dao.CustomerDao;
+import dao.Impl.CustomerDaoImpl;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
@@ -39,7 +39,7 @@ public class CustomerFormController {
     public TableColumn colOption;
     public JFXTextField txtSerach;
 
-    CustomerModel customerModel=new CustomerModelImpl();
+    CustomerDao customerDao =new CustomerDaoImpl();
     public void initialize(){
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -53,7 +53,7 @@ public class CustomerFormController {
     private void loadCustomerTable() {
         ObservableList<CustomerTm> ctm = FXCollections.observableArrayList();
         try {
-            List<CustomerDto> dtoList = customerModel.allCustomers();
+            List<CustomerDto> dtoList = customerDao.allCustomers();
             for(CustomerDto dto:dtoList){
                 Button btn =new Button("Delete");
                 CustomerTm c = new CustomerTm(
@@ -77,7 +77,7 @@ public class CustomerFormController {
 
     private void deleteCustomer(String id) {
         try {
-            boolean isDelete = customerModel.deleteCustomer(id);
+            boolean isDelete = customerDao.deleteCustomer(id);
             if (isDelete){
                 new Alert(Alert.AlertType.INFORMATION,"Delete Successfully").show();
             }else{
@@ -95,7 +95,7 @@ public class CustomerFormController {
             CustomerDto c = new CustomerDto(txtId.getText(), txtName.getText(), txtAddress.getText(), Double.parseDouble(txtSalary.getText()));
 
             try {
-                boolean isSaved = customerModel.saveCustomer(c);
+                boolean isSaved = customerDao.saveCustomer(c);
 
                 if (isSaved){
                     loadCustomerTable();

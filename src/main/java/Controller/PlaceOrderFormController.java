@@ -6,12 +6,12 @@ import Dto.ItemDto;
 import Dto.OrderDetailDto;
 import Dto.OrderDto;
 import Dto.Tm.OrderTm;
-import dao.CustomerModel;
-import dao.Impl.CustomerModelImpl;
-import dao.Impl.ItemModelImpl;
-import dao.Impl.OrderModelImpl;
-import dao.ItemModel;
-import dao.OrderModel;
+import dao.CustomerDao;
+import dao.Impl.CustomerDaoImpl;
+import dao.Impl.ItemDaoImpl;
+import dao.Impl.OrderDaoImpl;
+import dao.ItemDao;
+import dao.OrderDao;
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import javafx.collections.FXCollections;
@@ -50,14 +50,14 @@ public class PlaceOrderFormController {
     public Label lblTotal;
     public Label lblOrderId;
     private double tot;
-    CustomerModel customerModel=new CustomerModelImpl();
-    ItemModel itemModel=new ItemModelImpl();
+    CustomerDao customerDao =new CustomerDaoImpl();
+    ItemDao itemDao =new ItemDaoImpl();
 
     List<CustomerDto> custDto;
     List<ItemDto> itemDto;
 
     ObservableList<OrderTm> orderTmList=FXCollections.observableArrayList();
-    OrderModel orderModel=new OrderModelImpl();
+    OrderDao orderDao =new OrderDaoImpl();
     public void initialize(){
         generateOrderId();
 
@@ -90,7 +90,7 @@ public class PlaceOrderFormController {
 
     private void generateOrderId() {
         try {
-            OrderDto dto = orderModel.getLastId();
+            OrderDto dto = orderDao.getLastId();
             if (dto!=null){
                 String lastId=dto.getOrderId();
                 int num = Integer.parseInt(lastId.split("[D]")[1]);
@@ -109,7 +109,7 @@ public class PlaceOrderFormController {
 
     private void loadCustomerIds() {
         try {
-            custDto=customerModel.allCustomers();
+            custDto= customerDao.allCustomers();
             ObservableList<String> idList= FXCollections.observableArrayList();
 
             for(CustomerDto dto : custDto){
@@ -127,7 +127,7 @@ public class PlaceOrderFormController {
 
     private void loadItemCodes() {
         try {
-            itemDto=itemModel.allItems();
+            itemDto= itemDao.allItems();
             ObservableList<String> list=FXCollections.observableArrayList();
             for (ItemDto dto:itemDto){
                 list.add(dto.getCode());
@@ -214,7 +214,7 @@ public class PlaceOrderFormController {
                 orderDetailDtos
         );
         try {
-            boolean isSaved = orderModel.orderSave(order);
+            boolean isSaved = orderDao.orderSave(order);
             if (isSaved) {
                 new Alert(Alert.AlertType.INFORMATION, "Order Saved").show();
             }else{
