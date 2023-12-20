@@ -2,6 +2,8 @@ package Controller;
 
 import Dto.ItemDto;
 import Dto.Tm.ItemTm;
+import bo.custom.ItemBo;
+import bo.custom.impl.ItemBoImpl;
 import dao.custom.impl.ItemDaoImpl;
 import dao.custom.ItemDao;
 import com.jfoenix.controls.JFXButton;
@@ -64,7 +66,7 @@ public class ItemFormController {
     @FXML
     private TreeTableColumn colOption;
 
-    ItemDao itemDao =new ItemDaoImpl();
+    ItemBo<ItemDto,String> itemBo=new ItemBoImpl();
 
     public void initialize() {
         colCode.setCellValueFactory(new TreeItemPropertyValueFactory<>("code"));
@@ -92,34 +94,37 @@ public class ItemFormController {
     private void loadItemTable() {
 
         ObservableList<ItemTm> itm = FXCollections.observableArrayList();
+        List<ItemDto> dtoList = null;
         try {
-            List<ItemDto> dtoList = itemDao.allItems();
-            for (ItemDto dto:dtoList){
-                JFXButton btn =new JFXButton("Delete");
-                ItemTm i = new ItemTm(
-                        dto.getCode(),
-                        dto.getDescription(),
-                        dto.getUnitPrice(),
-                        dto.getQuantityOnHand(),
-                        btn
-                );
-                btn.setOnAction(ActionEvent ->{
-                    deleteItem(i.getCode());
-                });
-                itm.add(i);
-            }
-            RecursiveTreeItem treeItem = new RecursiveTreeItem<>(itm, RecursiveTreeObject::getChildren);
-            tblItem.setRoot(treeItem);
-            tblItem.setShowRoot(false);
-
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+            dtoList = itemBo.allItem();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
+        for (ItemDto dto:dtoList){
+            JFXButton btn =new JFXButton("Delete");
+            ItemTm i = new ItemTm(
+                    dto.getCode(),
+                    dto.getDescription(),
+                    dto.getUnitPrice(),
+                    dto.getQuantityOnHand(),
+                    btn
+            );
+            btn.setOnAction(ActionEvent ->{
+                deleteItem(i.getCode());
+            });
+            itm.add(i);
+        }
+        RecursiveTreeItem treeItem = new RecursiveTreeItem<>(itm, RecursiveTreeObject::getChildren);
+        tblItem.setRoot(treeItem);
+        tblItem.setShowRoot(false);
+
     }
 
     private void deleteItem(String code) {
         try {
-            boolean isDeleted = itemDao.deleteItem(code);
+            boolean isDeleted = itemBo.deleteItem(code);
             if (isDeleted){
                 new Alert(Alert.AlertType.INFORMATION,"Delete Successfully").show();
                 loadItemTable();
@@ -145,7 +150,7 @@ public class ItemFormController {
             );
 
             try {
-                boolean isSaved = itemDao.saveItem(item);
+                boolean isSaved = itemBo.saveItem(item);
                 if (isSaved){
                     new Alert(Alert.AlertType.INFORMATION,"Item Added Successfully").show();
                     txtCode.setText("");
