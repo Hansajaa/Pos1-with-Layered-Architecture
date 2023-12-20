@@ -10,6 +10,5 @@ public interface ItemDao {
     ItemDto searchItem(String code);
     boolean updateItem(ItemDto dto);
     boolean deleteItem(String code) throws SQLException, ClassNotFoundException;
-
     List<ItemDto> allItems() throws SQLException, ClassNotFoundException;
 }

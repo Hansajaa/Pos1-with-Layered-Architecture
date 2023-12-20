@@ -11,5 +11,6 @@ public interface CustomerBo<T,dataType> extends SuperBo {
 
     boolean deleteCustomer(dataType value) throws SQLException, ClassNotFoundException;
 
+    boolean updateCustomer(T dto) throws SQLException, ClassNotFoundException;
     List<T> allCustomers() throws SQLException, ClassNotFoundException;
 }

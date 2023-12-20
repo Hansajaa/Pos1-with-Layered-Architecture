@@ -25,6 +25,22 @@ public class CustomerBoImpl implements CustomerBo<CustomerDto,String> {
     }
 
     @Override
+    public boolean updateCustomer(CustomerDto dto) throws SQLException, ClassNotFoundException {
+        if (dto!=null){
+            return dao.update(
+                    new Customer(
+                            dto.getId(),
+                            dto.getName(),
+                            dto.getAddress(),
+                            dto.getSalary()
+                    )
+            );
+        }else {
+            return false;
+        }
+    }
+
+    @Override
     public List<CustomerDto> allCustomers() throws SQLException, ClassNotFoundException {
         List<CustomerDto> dtoList=new ArrayList<>();
 

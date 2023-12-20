@@ -42,6 +42,7 @@ public class CustomerFormController {
     public JFXTextField txtSerach;
 
     CustomerBo<CustomerDto,String> customerBo =new CustomerBoImpl();
+
     public void initialize(){
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -50,8 +51,21 @@ public class CustomerFormController {
         colOption.setCellValueFactory(new PropertyValueFactory<>("btn"));
         loadCustomerTable();
 
-
+        tblCustomer.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
+            setData(newValue);
+        });
     }
+
+    private void setData(CustomerTm newValue) {
+        if (newValue!=null){
+            txtId.setEditable(false);
+            txtId.setText(newValue.getId());
+            txtName.setText(newValue.getName());
+            txtAddress.setText(newValue.getAddress());
+            txtSalary.setText(String.valueOf(newValue.getSalary()));
+        }
+    }
+
     private void loadCustomerTable() {
         ObservableList<CustomerTm> ctm = FXCollections.observableArrayList();
         try {
@@ -121,5 +135,29 @@ public class CustomerFormController {
         Stage stage=(Stage) customerPane.getScene().getWindow();
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/View/DashboardForm.fxml"))));
         stage.show();
+    }
+
+    public void updateButtonOnAction(ActionEvent actionEvent) {
+        try {
+            CustomerDto dto=new CustomerDto(
+                    txtId.getText(),
+                    txtName.getText(),
+                    txtAddress.getText(),
+                    Double.parseDouble(txtSalary.getText())
+            );
+            boolean isUpdated = customerBo.updateCustomer(dto);
+            if (isUpdated){
+                loadCustomerTable();
+                new Alert(Alert.AlertType.CONFIRMATION,"Customer Updated Successfully :)").show();
+            }else {
+                new Alert(Alert.AlertType.ERROR,"Something went wrong :(").show();
+            }
+        }catch (RuntimeException e){
+            new Alert(Alert.AlertType.ERROR,"Select a Customer").show();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
