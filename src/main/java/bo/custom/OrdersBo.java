@@ -1,4 +1,9 @@
 package bo.custom;
 
-public interface OrdersBo {
+import java.sql.SQLException;
+
+public interface OrdersBo<T,dataType> {
+    dataType getLastId() throws SQLException, ClassNotFoundException;
+
+    boolean saveOrder(T dto) throws SQLException, ClassNotFoundException;
 }

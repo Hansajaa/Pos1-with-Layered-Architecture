@@ -7,7 +7,11 @@ import Dto.OrderDetailDto;
 import Dto.OrderDto;
 import Dto.Tm.OrderTm;
 import bo.custom.CustomerBo;
+import bo.custom.ItemBo;
+import bo.custom.OrdersBo;
 import bo.custom.impl.CustomerBoImpl;
+import bo.custom.impl.ItemBoImpl;
+import bo.custom.impl.OrdersBoImpl;
 import dao.custom.CustomerDao;
 import dao.custom.impl.CustomerDaoImpl;
 import dao.custom.impl.ItemDaoImpl;
@@ -53,13 +57,13 @@ public class PlaceOrderFormController {
     public Label lblOrderId;
     private double tot;
     CustomerBo<CustomerDto,String> customerBo =new CustomerBoImpl();
-    ItemDao itemDao =new ItemDaoImpl();
+    ItemBo<ItemDto,String> itemBo =new ItemBoImpl();
 
     List<CustomerDto> custDto;
-    List<ItemDto> itemDto;
+    List<ItemDto> itemDtos;
 
     ObservableList<OrderTm> orderTmList=FXCollections.observableArrayList();
-    OrderDao orderDao =new OrderDaoImpl();
+    OrdersBo<OrderDto,String> ordersBo =new OrdersBoImpl();
     public void initialize(){
         generateOrderId();
 
@@ -81,7 +85,7 @@ public class PlaceOrderFormController {
         });
 
         cmbItemCodes.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, code) ->{
-            for (ItemDto dto:itemDto) {
+            for (ItemDto dto:itemDtos) {
                 if (dto.getCode().equals(code)){
                     txtDescription.setText(dto.getDescription());
                     txtUnitPrice.setText(Double.toString(dto.getUnitPrice()));
@@ -92,12 +96,8 @@ public class PlaceOrderFormController {
 
     private void generateOrderId() {
         try {
-            OrderDto dto = orderDao.getLastId();
-            if (dto!=null){
-                String lastId=dto.getOrderId();
-                int num = Integer.parseInt(lastId.split("[D]")[1]);
-                num++;
-                String newId=String.format("D%03d",num);
+            String newId = ordersBo.getLastId();
+            if (newId!=null){
                 lblOrderId.setText(newId);
             }else {
                 lblOrderId.setText("D001");
@@ -129,9 +129,9 @@ public class PlaceOrderFormController {
 
     private void loadItemCodes() {
         try {
-            itemDto= itemDao.allItems();
+            itemDtos= itemBo.allItem();
             ObservableList<String> list=FXCollections.observableArrayList();
-            for (ItemDto dto:itemDto){
+            for (ItemDto dto:itemDtos){
                 list.add(dto.getCode());
             }
 
@@ -216,7 +216,7 @@ public class PlaceOrderFormController {
                 orderDetailDtos
         );
         try {
-            boolean isSaved = orderDao.orderSave(order);
+            boolean isSaved = ordersBo.saveOrder(order);
             if (isSaved) {
                 new Alert(Alert.AlertType.INFORMATION, "Order Saved").show();
             }else{

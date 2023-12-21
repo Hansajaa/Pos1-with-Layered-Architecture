@@ -6,6 +6,7 @@ import dao.custom.OrderDao;
 import dao.custom.OrderDetailDao;
 
 import java.sql.*;
+import java.util.List;
 
 public class OrderDaoImpl implements OrderDao {
 
@@ -55,6 +56,25 @@ public class OrderDaoImpl implements OrderDao {
         }else {
             return null;
         }
+    }
 
+    @Override
+    public boolean save(OrderDto entity) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean update(OrderDto entity) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean delete(String value) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public List<OrderDto> getAll() throws SQLException, ClassNotFoundException {
+        return null;
     }
 }
