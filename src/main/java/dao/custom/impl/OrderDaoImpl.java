@@ -2,8 +2,10 @@ package dao.custom.impl;
 
 import DB.DBConnection;
 import Dto.OrderDto;
+import dao.DaoFactory;
 import dao.custom.OrderDao;
 import dao.custom.OrderDetailDao;
+import dao.util.DaoType;
 
 import java.sql.*;
 import java.util.List;
@@ -13,7 +15,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public boolean orderSave(OrderDto dto) throws SQLException {
-        OrderDetailDao orderDetailDao =new OrderDetailDaoImpl();
+        OrderDetailDao orderDetailDao = DaoFactory.getInstance().getDao(DaoType.ORDER_DETAIL);
 
         Connection connection=null;
         try{
@@ -58,6 +60,8 @@ public class OrderDaoImpl implements OrderDao {
         }
 
     }
+
+//    ------------------------------crud dao methods------------------------------
 
     @Override
     public boolean save(OrderDto entity) throws SQLException, ClassNotFoundException {

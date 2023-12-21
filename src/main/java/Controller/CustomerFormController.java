@@ -2,12 +2,14 @@ package Controller;
 
 import Dto.CustomerDto;
 import Dto.Tm.CustomerTm;
+import bo.BoFactory;
 import bo.custom.CustomerBo;
 import bo.custom.impl.CustomerBoImpl;
 import dao.custom.CustomerDao;
 import dao.custom.impl.CustomerDaoImpl;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import dao.util.BoType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -41,7 +43,7 @@ public class CustomerFormController {
     public TableColumn colOption;
     public JFXTextField txtSerach;
 
-    CustomerBo<CustomerDto,String> customerBo =new CustomerBoImpl();
+    CustomerBo<CustomerDto,String> customerBo = BoFactory.getInstance().getBo(BoType.CUSTOMER);
 
     public void initialize(){
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));

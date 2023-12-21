@@ -4,6 +4,7 @@ import DB.DBConnection;
 import Dto.OrderDetailDto;
 import dao.custom.OrderDetailDao;
 import dao.util.CrudUtil;
+import entity.OrderDetail;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -32,5 +33,25 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
         }
 
         return orderDetailsSaved;
+    }
+//    ----------------------------crud dao methods----------------------------------------------
+    @Override
+    public boolean save(OrderDetail entity) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean update(OrderDetail entity) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean delete(String value) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public List<OrderDetail> getAll() throws SQLException, ClassNotFoundException {
+        return null;
     }
 }

@@ -6,6 +6,7 @@ import Dto.ItemDto;
 import Dto.OrderDetailDto;
 import Dto.OrderDto;
 import Dto.Tm.OrderTm;
+import bo.BoFactory;
 import bo.custom.CustomerBo;
 import bo.custom.ItemBo;
 import bo.custom.OrdersBo;
@@ -20,6 +21,7 @@ import dao.custom.ItemDao;
 import dao.custom.OrderDao;
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import dao.util.BoType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -56,14 +58,14 @@ public class PlaceOrderFormController {
     public Label lblTotal;
     public Label lblOrderId;
     private double tot;
-    CustomerBo<CustomerDto,String> customerBo =new CustomerBoImpl();
-    ItemBo<ItemDto,String> itemBo =new ItemBoImpl();
+    CustomerBo<CustomerDto,String> customerBo = BoFactory.getInstance().getBo(BoType.CUSTOMER);
+    ItemBo<ItemDto,String> itemBo = BoFactory.getInstance().getBo(BoType.ITEM);
 
     List<CustomerDto> custDto;
     List<ItemDto> itemDtos;
 
     ObservableList<OrderTm> orderTmList=FXCollections.observableArrayList();
-    OrdersBo<OrderDto,String> ordersBo =new OrdersBoImpl();
+    OrdersBo<OrderDto,String> ordersBo = BoFactory.getInstance().getBo(BoType.ORDER);
     public void initialize(){
         generateOrderId();
 

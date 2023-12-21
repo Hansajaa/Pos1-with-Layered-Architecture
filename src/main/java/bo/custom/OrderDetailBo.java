@@ -1,4 +1,4 @@
 package bo.custom;
 
-public interface OrderDetailBo {
+public interface OrderDetailBo{
 }
