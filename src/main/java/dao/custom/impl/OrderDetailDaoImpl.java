@@ -3,6 +3,7 @@ package dao.custom.impl;
 import DB.DBConnection;
 import Dto.OrderDetailDto;
 import dao.custom.OrderDetailDao;
+import dao.util.CrudUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,6 +24,7 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
             pstm.setString(2,detailDto.getItemCode());
             pstm.setInt(3,detailDto.getQty());
             pstm.setDouble(4,detailDto.getUnitPrice());
+//            boolean isSaved = CrudUtil.execute(sql,detailDto.getOrderId(),detailDto.getItemCode(),detailDto.getQty(),detailDto.getUnitPrice());
 
             if (!(pstm.executeUpdate()>0)){
                 orderDetailsSaved=false;
