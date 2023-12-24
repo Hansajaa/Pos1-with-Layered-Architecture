@@ -8,7 +8,9 @@ import entity.OrderDetail;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDetailDaoImpl implements OrderDetailDao {
@@ -34,7 +36,32 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
 
         return orderDetailsSaved;
     }
-//    ----------------------------crud dao methods----------------------------------------------
+
+    @Override
+    public List<OrderDetail> getItems(String value) throws SQLException, ClassNotFoundException {
+
+        String sql="SELECT * FROM orderdetail WHERE orderId=?";
+
+        ResultSet resultSet = CrudUtil.execute(sql,value);
+
+        List<OrderDetail> orderDetailList=new ArrayList<>();
+
+        while (resultSet.next()){
+            orderDetailList.add(
+                    new OrderDetail(
+                            resultSet.getString(1),
+                            resultSet.getString(2),
+                            resultSet.getInt(3),
+                            resultSet.getDouble(4)
+                    )
+            );
+        }
+
+        return orderDetailList;
+
+    }
+
+    //    ----------------------------crud dao methods----------------------------------------------
     @Override
     public boolean save(OrderDetail entity) throws SQLException, ClassNotFoundException {
         return false;

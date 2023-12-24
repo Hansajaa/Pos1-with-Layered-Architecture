@@ -10,10 +10,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
@@ -25,9 +27,12 @@ public class DashboardFormController {
     public JFXButton btnPlaceOrder;
     public AnchorPane dashboardPane;
     public Label lblTime;
+    public Text lblDate;
 
     public void initialize(){
+
         runTime();
+        runDate();
     }
 
     private void runTime() {
@@ -35,6 +40,16 @@ public class DashboardFormController {
                 Duration.ZERO,
                 actionEvent -> lblTime.setText(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")))
         ), new KeyFrame(Duration.seconds(1)));
+
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+    }
+
+    private void runDate() {
+        Timeline timeline = new Timeline(new KeyFrame(
+                Duration.ZERO,
+                actionEvent -> lblDate.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("YYYY-MM-dd")))
+        ), new KeyFrame(Duration.hours(24)));
 
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
@@ -58,6 +73,13 @@ public class DashboardFormController {
     public void placeOrderButtonOnAction(ActionEvent actionEvent) throws IOException {
         Stage stage = (Stage) dashboardPane.getScene().getWindow();
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/View/PlaceOrderForm.fxml"))));
+        stage.setTitle("Place Order Form");
+        stage.show();
+    }
+
+    public void OrdersButtonOnAction(ActionEvent actionEvent) throws IOException {
+        Stage stage = (Stage) dashboardPane.getScene().getWindow();
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/View/OrdersForm.fxml"))));
         stage.setTitle("Place Order Form");
         stage.show();
     }

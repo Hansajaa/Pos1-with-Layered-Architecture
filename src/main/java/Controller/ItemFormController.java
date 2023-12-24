@@ -89,38 +89,52 @@ public class ItemFormController {
                 });
             }
         });
+
+        tblItem.getSelectionModel().selectedItemProperty().addListener((observableValue, oldSelection, newSelection) -> {
+            if (newSelection!=null){
+                setData(newSelection.getValue());
+            }
+        });
     }
 
+    private void setData(ItemTm newSelection) {
+        if (newSelection!=null){
+            txtCode.setText(newSelection.getCode());
+            txtDesc.setText(newSelection.getDescription());
+            txtPrice.setText(String.valueOf(newSelection.getUnitPrice()));
+            txtQty.setText(String.valueOf(newSelection.getQuantityOnHand()));
+        }
+    }
 
 
     private void loadItemTable() {
 
         ObservableList<ItemTm> itm = FXCollections.observableArrayList();
-        List<ItemDto> dtoList = null;
+
         try {
-            dtoList = itemBo.allItem();
+            List<ItemDto> dtoList = itemBo.allItem();
+            for (ItemDto dto:dtoList){
+                JFXButton btn =new JFXButton("Delete");
+                ItemTm i = new ItemTm(
+                        dto.getCode(),
+                        dto.getDescription(),
+                        dto.getUnitPrice(),
+                        dto.getQuantityOnHand(),
+                        btn
+                );
+                btn.setOnAction(ActionEvent ->{
+                    deleteItem(i.getCode());
+                });
+                itm.add(i);
+            }
+            RecursiveTreeItem treeItem = new RecursiveTreeItem<>(itm, RecursiveTreeObject::getChildren);
+            tblItem.setRoot(treeItem);
+            tblItem.setShowRoot(false);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        for (ItemDto dto:dtoList){
-            JFXButton btn =new JFXButton("Delete");
-            ItemTm i = new ItemTm(
-                    dto.getCode(),
-                    dto.getDescription(),
-                    dto.getUnitPrice(),
-                    dto.getQuantityOnHand(),
-                    btn
-            );
-            btn.setOnAction(ActionEvent ->{
-                deleteItem(i.getCode());
-            });
-            itm.add(i);
-        }
-        RecursiveTreeItem treeItem = new RecursiveTreeItem<>(itm, RecursiveTreeObject::getChildren);
-        tblItem.setRoot(treeItem);
-        tblItem.setShowRoot(false);
 
     }
 
@@ -139,7 +153,30 @@ public class ItemFormController {
     }
 
     public void updateButtonOnAction(ActionEvent actionEvent) {
-
+        try{
+            ItemDto dto = new ItemDto(
+                    txtCode.getText(),
+                    txtDesc.getText(),
+                    Double.parseDouble(txtPrice.getText()),
+                    Integer.parseInt(txtQty.getText())
+            );
+            boolean isUpdated = itemBo.updateItem(dto);
+            loadItemTable();
+            if (isUpdated){
+                new Alert(Alert.AlertType.CONFIRMATION,"Item Updated Successfully :)").show();
+            }else {
+                new Alert(Alert.AlertType.CONFIRMATION,"Item not Updated :(").show();
+            }
+            //loadItemTable();
+        }catch (RuntimeException e){
+            new Alert(Alert.AlertType.ERROR,"Select a Item").show();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }finally {
+            //loadItemTable();
+        }
     }
 
     public void saveButtonOnAction(ActionEvent actionEvent) {
@@ -177,4 +214,7 @@ public class ItemFormController {
     }
 
 
+    public void refreshButtonOnAction(ActionEvent actionEvent) {
+        loadItemTable();
+    }
 }

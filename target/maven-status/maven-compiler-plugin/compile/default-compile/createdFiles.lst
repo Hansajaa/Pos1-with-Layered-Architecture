@@ -4,6 +4,7 @@ dao\custom\ItemDao.class
 dao\util\DaoType.class
 bo\custom\OrderDetailBo.class
 Controller\ItemFormController.class
+Dto\Tm\OrderDetailTm$OrderDetailTmBuilder.class
 dao\CrudDao.class
 Controller\CustomerFormController.class
 Entity\Item.class
@@ -17,6 +18,7 @@ Dto\Tm\ItemTm.class
 DB\DBConnection.class
 AppInitializer.class
 Dto\ItemDto.class
+Dto\Tm\OrderDetailTm.class
 Dto\OrderDto.class
 dao\util\BoType.class
 Dto\OrderDetailDto.class
@@ -27,9 +29,11 @@ Dto\Tm\OrderTm.class
 dao\custom\CustomerDao.class
 dao\SuperDao.class
 bo\custom\CustomerBo.class
+bo\custom\impl\OrderDetailBoImpl.class
 dao\util\CrudUtil.class
 Entity\OrderDetail.class
 bo\custom\ItemBo.class
+Controller\OrdersFormController.class
 dao\custom\OrderDetailDao.class
 Entity\Orders.class
 Controller\ItemFormController$1$1.class
@@ -41,6 +45,7 @@ bo\BoFactory.class
 Controller\ItemFormController$1.class
 dao\custom\impl\CustomerDaoImpl.class
 dao\custom\OrderDao.class
+Dto\Tm\OrdersFormTm.class
 Dto\ItemDto$ItemDtoBuilder.class
 Dto\Tm\CustomerTm$CustomerTmBuilder.class
 Controller\DashboardFormController.class

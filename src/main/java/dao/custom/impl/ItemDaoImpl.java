@@ -33,7 +33,10 @@ public class ItemDaoImpl implements ItemDao {
 
     @Override
     public boolean update(Item entity) throws SQLException, ClassNotFoundException {
-        return false;
+        String sql = "UPDATE item set description=?, unitPrice=?, qtyOnHand=? WHERE code=?";
+
+        return CrudUtil.execute(sql,entity.getDescription(),entity.getUnitPrice(),entity.getQtyOnHand(),entity.getCode());
+
     }
 
     @Override

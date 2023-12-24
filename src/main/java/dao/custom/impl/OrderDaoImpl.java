@@ -5,9 +5,12 @@ import Dto.OrderDto;
 import dao.DaoFactory;
 import dao.custom.OrderDao;
 import dao.custom.OrderDetailDao;
+import dao.util.CrudUtil;
 import dao.util.DaoType;
+import entity.Orders;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDaoImpl implements OrderDao {
@@ -59,6 +62,27 @@ public class OrderDaoImpl implements OrderDao {
             return null;
         }
 
+    }
+
+    @Override
+    public List<Orders> allOrders() throws SQLException, ClassNotFoundException {
+        String sql="SELECT * FROM Orders";
+        ResultSet resultSet=CrudUtil.execute(sql);
+
+        List<Orders> entityList=new ArrayList<>();
+
+        while (resultSet.next()){
+            entityList.add(
+                    new Orders(
+                            resultSet.getString(1),
+                            resultSet.getString(2),
+                            resultSet.getString(3)
+                    )
+            );
+
+        }
+
+        return entityList;
     }
 
 //    ------------------------------crud dao methods------------------------------

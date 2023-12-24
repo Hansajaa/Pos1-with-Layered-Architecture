@@ -2,6 +2,7 @@ package bo;
 
 import bo.custom.impl.CustomerBoImpl;
 import bo.custom.impl.ItemBoImpl;
+import bo.custom.impl.OrderDetailBoImpl;
 import bo.custom.impl.OrdersBoImpl;
 import dao.util.BoType;
 
@@ -21,7 +22,8 @@ public class BoFactory {
         switch (type){
             case CUSTOMER: return (T) (new CustomerBoImpl());
             case ITEM:return (T) (new ItemBoImpl());
-            case ORDER:return (T) new OrdersBoImpl();
+            case ORDER:return (T) (new OrdersBoImpl());
+            case ORDER_DETAIL:return  (T) (new OrderDetailBoImpl());
         }
         return null;
     }
