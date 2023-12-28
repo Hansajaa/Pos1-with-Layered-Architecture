@@ -1,15 +1,16 @@
 package dao.custom.impl;
 
-import DB.DBConnection;
-import Dto.CustomerDto;
 import dao.custom.CustomerDao;
 import dao.util.CrudUtil;
 import entity.Customer;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 
-import java.sql.PreparedStatement;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,15 +18,18 @@ public class CustomerDaoImpl implements CustomerDao {
 
     @Override
     public boolean save(Customer entity) throws SQLException, ClassNotFoundException {
-        String sql = "INSERT INTO customer VALUES(?,?,?,?)";
-//        PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql);
-//        pstm.setString(1,entity.getId());
-//        pstm.setString(2,entity.getName());
-//        pstm.setString(3, entity.getAddress());
-//        pstm.setDouble(4,entity.getSalary());
-//
-//        return pstm.executeUpdate()>0;
-        return CrudUtil.execute(sql,entity.getId(),entity.getName(),entity.getAddress(),entity.getSalary());
+
+        Configuration configuration = new Configuration()
+                .configure("hibernate.cfg.xml")
+                .addAnnotatedClass(Customer.class);
+
+        SessionFactory sessionFactory = configuration.buildSessionFactory();
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.save(entity);
+        transaction.commit();
+        session.close();
+        return true;
     }
 
     @Override
