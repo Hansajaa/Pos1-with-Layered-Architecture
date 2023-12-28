@@ -35,6 +35,7 @@ Entity\OrderDetail.class
 bo\custom\ItemBo.class
 Controller\OrdersFormController.class
 dao\custom\OrderDetailDao.class
+dao\util\HibernateUtil.class
 Entity\Orders.class
 Controller\ItemFormController$1$1.class
 Entity\Customer.class
