@@ -114,7 +114,11 @@ public class OrderDaoImpl implements OrderDao {
 //        }
 //
 //        return entityList;
-        return null;
+
+        Session session = HibernateUtil.getSession();
+        Query query = session.createQuery("FROM Orders");
+        List<Orders> list = query.list();
+        return list;
     }
 
 //    ------------------------------crud dao methods------------------------------

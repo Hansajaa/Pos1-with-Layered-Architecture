@@ -8,6 +8,7 @@ import dao.util.HibernateUtil;
 import entity.OrderDetail;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -49,7 +50,7 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
 //
 //        List<OrderDetail> orderDetailList=new ArrayList<>();
 //
-//        while (resultSet.next()){
+//        while (resultSet.next()) {
 //            orderDetailList.add(
 //                    new OrderDetail(
 //                            resultSet.getString(1),
@@ -58,11 +59,12 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
 //                            resultSet.getDouble(4)
 //                    )
 //            );
-
-
-//    }
-
-        return null;
+//        }
+        Session session = HibernateUtil.getSession();
+        Query query = session.createQuery("FROM OrderDetail WHERE orderDetailKey.orderId=:i");
+        query.setParameter("i",value);
+        List<OrderDetail> list = query.list();
+        return list;
 
     }
 

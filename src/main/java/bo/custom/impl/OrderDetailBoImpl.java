@@ -17,21 +17,21 @@ public class OrderDetailBoImpl implements OrderDetailBo {
 
     @Override
     public List<OrderDetailDto> getItems(String value) throws SQLException, ClassNotFoundException {
-//        List<OrderDetail> entities = dao.getItems(value);
-//
-//        List<OrderDetailDto> dtos =new ArrayList<>();
-//
-//        for (OrderDetail entity:entities) {
-//            dtos.add(
-//              new OrderDetailDto(
-//                      entity.getOrderId(),
-//                      entity.getItemCode(),
-//                      entity.getQty(),
-//                      entity.getUnitPrice()
-//              )
-//            );
-//        }
+        List<OrderDetail> entities = dao.getItems(value);
 
-        return null;
+        List<OrderDetailDto> dtos =new ArrayList<>();
+
+        for (OrderDetail entity:entities) {
+            dtos.add(
+              new OrderDetailDto(
+                      entity.getOrderDetailKey().getOrderId(),
+                      entity.getOrderDetailKey().getItemCode(),
+                      entity.getQty(),
+                      entity.getUnitPrice()
+              )
+            );
+        }
+
+        return dtos;
     }
 }

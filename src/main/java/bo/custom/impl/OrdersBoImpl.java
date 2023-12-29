@@ -37,22 +37,21 @@ public class OrdersBoImpl implements OrdersBo<OrderDto,String> {
 
     @Override
     public List<OrderDto> allOrders() throws SQLException, ClassNotFoundException {
-//        List<Orders> orders = orderDao.allOrders();
-//
-//        List<OrderDto> dtoList=new ArrayList<>();
-//
-//        for (Orders order:orders) {
-//            dtoList.add(
-//                    new OrderDto(
-//                            order.getId(),
-//                            order.getDate(),
-//                            order.getCustomerId(),
-//                            null
-//                    )
-//            );
-//        }
-//        return dtoList;
+        List<Orders> orders = orderDao.allOrders();
 
-        return null;
+        List<OrderDto> dtoList=new ArrayList<>();
+
+        System.out.println("order.getId()");
+        for (Orders order:orders) {
+            dtoList.add(
+                    new OrderDto(
+                            order.getId(),
+                            order.getDate(),
+                            order.getCustomer().getId(),
+                            null
+                    )
+            );
+        }
+        return dtoList;
     }
 }

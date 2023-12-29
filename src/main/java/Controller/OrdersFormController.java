@@ -66,30 +66,30 @@ public class OrdersFormController {
     }
 
     private void setData(OrdersFormTm newValue) {
-//        ObservableList<OrderDetailTm> detailTms = FXCollections.observableArrayList();
-//        try {
-//            if (newValue!=null) {
-//                List<OrderDetailDto> items = detailBo.getItems(newValue.getId());
-//                for (OrderDetailDto dto:items) {
-//                    detailTms.add(
-//                            new OrderDetailTm(
-//                                    dto.getOrderId(),
-//                                    dto.getItemCode(),
-//                                    dto.getQty(),
-//                                    dto.getUnitPrice()
-//                            )
-//                    );
-//                }
-//                TreeItem<OrderDetailTm> treeItem = new RecursiveTreeItem<>(detailTms, RecursiveTreeObject::getChildren);
-//                tblItems.setRoot(treeItem);
-//                tblItems.setShowRoot(false);
-//
-//            }
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        } catch (ClassNotFoundException e) {
-//            throw new RuntimeException(e);
-//        }
+        ObservableList<OrderDetailTm> detailTms = FXCollections.observableArrayList();
+        try {
+            if (newValue!=null) {
+                List<OrderDetailDto> items = detailBo.getItems(newValue.getId());
+                for (OrderDetailDto dto:items) {
+                    detailTms.add(
+                            new OrderDetailTm(
+                                    dto.getOrderId(),
+                                    dto.getItemCode(),
+                                    dto.getQty(),
+                                    dto.getUnitPrice()
+                            )
+                    );
+                }
+                TreeItem<OrderDetailTm> treeItem = new RecursiveTreeItem<>(detailTms, RecursiveTreeObject::getChildren);
+                tblItems.setRoot(treeItem);
+                tblItems.setShowRoot(false);
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
