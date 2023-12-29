@@ -15,14 +15,19 @@ import java.util.List;
 public class OrdersBoImpl implements OrdersBo<OrderDto,String> {
 
     OrderDao orderDao= DaoFactory.getInstance().getDao(DaoType.ORDER);
+
     @Override
     public String getLastId() throws SQLException, ClassNotFoundException {
         OrderDto dto = orderDao.getLastId();
-        String lastId = dto.getOrderId();
-        int num = Integer.parseInt(lastId.split("[D]")[1]);
-        num++;
-        String newId=String.format("D%03d",num);
-        return newId;
+        if (dto!=null) {
+            String lastId = dto.getOrderId();
+            int num = Integer.parseInt(lastId.split("[D]")[1]);
+            num++;
+            String newId=String.format("D%03d",num);
+            return newId;
+        }else{
+            return null;
+        }
     }
 
     @Override
@@ -32,20 +37,22 @@ public class OrdersBoImpl implements OrdersBo<OrderDto,String> {
 
     @Override
     public List<OrderDto> allOrders() throws SQLException, ClassNotFoundException {
-        List<Orders> orders = orderDao.allOrders();
+//        List<Orders> orders = orderDao.allOrders();
+//
+//        List<OrderDto> dtoList=new ArrayList<>();
+//
+//        for (Orders order:orders) {
+//            dtoList.add(
+//                    new OrderDto(
+//                            order.getId(),
+//                            order.getDate(),
+//                            order.getCustomerId(),
+//                            null
+//                    )
+//            );
+//        }
+//        return dtoList;
 
-        List<OrderDto> dtoList=new ArrayList<>();
-
-        for (Orders order:orders) {
-            dtoList.add(
-                    new OrderDto(
-                            order.getId(),
-                            order.getDate(),
-                            order.getCustomerId(),
-                            null
-                    )
-            );
-        }
-        return dtoList;
+        return null;
     }
 }

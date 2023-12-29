@@ -155,7 +155,8 @@ public class CustomerFormController {
                 new Alert(Alert.AlertType.ERROR,"Something went wrong :(").show();
             }
         }catch (RuntimeException e){
-            new Alert(Alert.AlertType.ERROR,"Select a Customer").show();
+//            new Alert(Alert.AlertType.ERROR,"Select a Customer").show();
+            throw new RuntimeException();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {

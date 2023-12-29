@@ -22,7 +22,7 @@ public class DaoFactory {
             case CUSTOMER:return (T) (new CustomerDaoImpl());
             case ITEM:return (T) (new ItemDaoImpl());
             case ORDER:return (T) (new OrderDaoImpl());
-            case ORDER_DETAIL:return (T) (new OrderDetailDaoImpl());
+            case ORDER_DETAIL:return  (T)(new OrderDetailDaoImpl());
         }
         return null;
     }

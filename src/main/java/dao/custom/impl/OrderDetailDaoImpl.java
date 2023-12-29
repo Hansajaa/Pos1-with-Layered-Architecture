@@ -4,7 +4,10 @@ import DB.DBConnection;
 import Dto.OrderDetailDto;
 import dao.custom.OrderDetailDao;
 import dao.util.CrudUtil;
+import dao.util.HibernateUtil;
 import entity.OrderDetail;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -40,24 +43,26 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
     @Override
     public List<OrderDetail> getItems(String value) throws SQLException, ClassNotFoundException {
 
-        String sql="SELECT * FROM orderdetail WHERE orderId=?";
+//        String sql="SELECT * FROM orderdetail WHERE orderId=?";
+//
+//        ResultSet resultSet = CrudUtil.execute(sql,value);
+//
+//        List<OrderDetail> orderDetailList=new ArrayList<>();
+//
+//        while (resultSet.next()){
+//            orderDetailList.add(
+//                    new OrderDetail(
+//                            resultSet.getString(1),
+//                            resultSet.getString(2),
+//                            resultSet.getInt(3),
+//                            resultSet.getDouble(4)
+//                    )
+//            );
 
-        ResultSet resultSet = CrudUtil.execute(sql,value);
 
-        List<OrderDetail> orderDetailList=new ArrayList<>();
+//    }
 
-        while (resultSet.next()){
-            orderDetailList.add(
-                    new OrderDetail(
-                            resultSet.getString(1),
-                            resultSet.getString(2),
-                            resultSet.getInt(3),
-                            resultSet.getDouble(4)
-                    )
-            );
-        }
-
-        return orderDetailList;
+        return null;
 
     }
 
